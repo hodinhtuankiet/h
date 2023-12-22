@@ -1,3 +1,4 @@
+import React from 'react'
 import { useColorScheme } from '@mui/material/styles'
 // import select mode
 import InputLabel from '@mui/material/InputLabel'
@@ -8,8 +9,7 @@ import Select from '@mui/material/Select'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
+
 
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
@@ -48,36 +48,4 @@ function ModeSelect() {
   )
 }
 
-function App() {
-  return (
-    <Container maxWidth={false} disableGutters sx={{ height: '100vh' }}>
-      <Box sx={{
-        backgroundColor: 'primary.light',
-        width: '100%',
-        // height: { theme.trello.}
-        height: (theme) => theme.trello.appBarHeight,
-        display: 'flex',
-        alignItems: 'center'
-      }}>
-        <ModeSelect/>
-      </Box>
-      <Box sx={{
-        backgroundColor: 'primary.dark',
-        width: '100%',
-        // height: { theme.trello.}
-        height: (theme) => theme.trello.boardBarHeight,
-        alignItems: 'center',
-        display: 'flex'
-      }}>   Box 2    </Box>
-      <Box sx={{
-        width: '100%',
-        // height: { theme.trello.}
-        height: (theme) => `calc(100vh - ${theme.trello.boardBarHeight} - ${theme.trello.appBarHeight})`,
-        alignItems: 'center',
-        display: 'flex'
-      }}>Box 3</Box>
-    </Container>
-  )
-}
-
-export default App
+export default index
