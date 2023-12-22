@@ -1,4 +1,3 @@
-import React from 'react'
 import { useColorScheme } from '@mui/material/styles'
 // import select mode
 import InputLabel from '@mui/material/InputLabel'
@@ -9,7 +8,7 @@ import Select from '@mui/material/Select'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import NightsStayIcon from '@mui/icons-material/NightsStay'
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest'
-
+//
 
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
@@ -48,4 +47,4 @@ function ModeSelect() {
   )
 }
 
-export default index
+export default ModeSelect
