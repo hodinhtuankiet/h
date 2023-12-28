@@ -17,11 +17,55 @@ const theme = extendTheme({
     dark: {
       palette: {
         primary: {
-          main: '#000'
+          main: '#ff5252'
+        }
+      }
+    }
+  },
+  // overide all atributes
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.primary.main,
+          fontSize: '0.875rem'
+        } )
+      }
+    },
+    // text of input
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => {
+          return {
+            color: theme.palette.primary.main,
+            fontSize: '0.875rem',
+            '.MuiOutlinedInput-notchedOutline' : {
+              // set border input
+              borderColor: theme.palette.primary.light
+            },
+            // hover vào
+            '$:hover' : {
+              '.MuiOutlinedInput-notchedOutline' : {
+                // set border input
+                borderColor: theme.palette.primary.main
+              }
+            },
+            '& fieldset': {
+              borderWidth: '1px !important'
+            }
+          }
         }
       }
     }
   }
+
 })
 
 export default theme

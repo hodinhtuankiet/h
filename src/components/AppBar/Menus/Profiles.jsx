@@ -40,7 +40,7 @@ export default function Profile() {
         }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar sx={{ mr: 2 }} /> My account
+          <Avatar sx={{ mr: 2 }} /> Tuan Kiet
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

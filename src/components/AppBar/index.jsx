@@ -26,13 +26,14 @@ function AppBar() {
       alignItems: 'center',
       justifyContent: 'space-between'
     }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '2' }}>
-        <AppsIcon sx={ { color: 'primary.main', gap: '2' } }/>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <AppsIcon sx={ { color: 'primary.main' } }/>
         <Box pl={1.5} sx={{ display: 'flex', alignItems: 'center' }}>
           <SvgIcon component={trelloLogo} inheritViewBox sx={ { color: 'primary.main' } } />
           {/* Text */}
-          <Typography pl={0.4} sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Trello </Typography>
+          <Typography pl={0.4} sx={{ fontSize: '1.2rem', fontWeight: 'bold', pl : '1' }}>Trello </Typography>
         </Box>
+
         <Workspaces/>
         <Recent/>
         <Started/>
@@ -41,21 +42,24 @@ function AppBar() {
         <Button variant="outlined" >
             Create
         </Button>
+
       </Box>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '2' }}>
-        <TextField id="outlined-search" label="Search...." type="search" size='small' />
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+
+        <TextField id="outlined-search" label="Search...." type="search" size='small'/>
         <ModeSelect/>
+
         {/* Tooltip hover vào hiện chữ  */}
         <Tooltip title="Notification">
           {/* Hiện lên hình tròn cho notifi  */}
-          <Badge color="primary" variant="dot" sx={{ cursor: 'pointer'}}>
+          <Badge color="primary" variant="dot" sx={{ cursor: 'pointer' }}>
             <NotificationsNoneIcon />
           </Badge>
         </Tooltip>
 
         <Tooltip title="Question">
-          <HelpOutLineIcon color="secondary" variant="dot" sx={{ cursor: 'pointer'}}>
+          <HelpOutLineIcon color="secondary" variant="dot" sx={{ cursor: 'pointer' }}>
           </HelpOutLineIcon>
         </Tooltip>
         <Profiles/>
