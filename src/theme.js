@@ -24,6 +24,21 @@ const theme = extendTheme({
   },
   // overide all atributes
   components: {
+    // css thanh kéo ngang
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '5px'
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#bdc3c7',
+            borderRadius: '8px'
+          }
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({

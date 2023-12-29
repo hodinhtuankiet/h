@@ -24,7 +24,9 @@ function AppBar() {
       display: 'flex',
       // center vertical
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      gap: 1,
+      overflowX: 'auto'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <AppsIcon sx={ { color: 'primary.main' } }/>
@@ -34,20 +36,21 @@ function AppBar() {
           <Typography pl={0.4} sx={{ fontSize: '1.2rem', fontWeight: 'bold', pl : '1' }}>Trello </Typography>
         </Box>
 
-        <Workspaces/>
-        <Recent/>
-        <Started/>
-        <Template/>
-
-        <Button variant="outlined" >
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap : 1 }}>
+          <Workspaces/>
+          <Recent/>
+          <Started/>
+          <Template/>
+          <Button variant="outlined" >
             Create
-        </Button>
+          </Button>
+        </Box>
 
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
 
-        <TextField id="outlined-search" label="Search...." type="search" size='small'/>
+        <TextField id="outlined-search" label="Search...." type="search" size='small' sx={{ minWidth: 100 }}/>
         <ModeSelect/>
 
         {/* Tooltip hover vào hiện chữ  */}
