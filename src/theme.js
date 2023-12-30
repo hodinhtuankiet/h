@@ -10,17 +10,24 @@ const theme = extendTheme({
     light: {
       palette: {
         primary: {
-          main: '#ff5252'
+          main: '#3498db'
         }
       }
     },
     dark: {
       palette: {
         primary: {
-          main: '#ff5252'
+          main: '#ecf0f1'
         }
       }
-    }
+    },
+    // bun: {
+    //   palette: {
+    //     primary: {
+    //       main: '#ecf0f1'
+    //     }
+    //   }
+    // }
   },
   // overide all atributes
   components: {

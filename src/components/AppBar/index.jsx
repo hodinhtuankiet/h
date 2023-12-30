@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField'
 import Badge from '@mui/material/Badge'
 import Tooltip from '@mui/material/Tooltip'
 import HelpOutLineIcon from '@mui/icons-material/HelpOutLine'
+import NoteAddIcon from '@mui/icons-material/NoteAdd'
 function AppBar() {
   return (
     <Box px={2} sx={{
@@ -41,7 +42,7 @@ function AppBar() {
           <Recent/>
           <Started/>
           <Template/>
-          <Button variant="outlined" >
+          <Button variant="outlined" startIcon={<NoteAddIcon/>}>
             Create
           </Button>
         </Box>
