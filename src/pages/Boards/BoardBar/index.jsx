@@ -10,9 +10,10 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
+// sx={{ bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) }}
 const MENU_STYLES = {
   color: 'primary.main',
-  bgcolor: 'white',
+  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) ,
   paddingX: '5px',
   // icon ở trong chip
   '& .MuiSvgIcon-root' : {
@@ -34,7 +35,7 @@ function BoardBar() {
       justifyContent: 'space-between',
       gap: 1,
       overflowX: 'auto',
-      borderTop: '1px solid #e74c3c'
+      borderTop: '1px solid #7f8c8d'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         {/* chip này vừa có icon vừa có labal (đơn giản thế thôi) */}

@@ -2,7 +2,7 @@ import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 
 const APP_BAR_HEIGHT = '58px'
 const BOARD_BAR_HEIGHT = '58px'
-const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT}`
+const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
 
 // Create a theme instance.
 const theme = extendTheme({
@@ -25,7 +25,7 @@ const theme = extendTheme({
           main: '#ecf0f1'
         }
       }
-    },
+    }
     // bun: {
     //   palette: {
     //     primary: {
@@ -64,6 +64,15 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           textTransform: 'none'
+        }
+      }
+    },
+    // Override Typography
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          // chỉ ghi đề những Typography của card (Ngoại trừ title của Column)
+          '&.MuiTypography-body1': { fontSize: '0.875rem' }
         }
       }
     },

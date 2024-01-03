@@ -38,7 +38,7 @@ function AppBar() {
         </Box>
 
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap : 1 }}>
-          <Workspaces/>
+          <Workspaces sx={{ bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) }} />
           <Recent/>
           <Started/>
           <Template/>
@@ -53,7 +53,6 @@ function AppBar() {
 
         <TextField id="outlined-search" label="Search...." type="search" size='small' sx={{ minWidth: 100 }}/>
         <ModeSelect/>
-
         {/* Tooltip hover vào hiện chữ  */}
         <Tooltip title="Notification">
           {/* Hiện lên hình tròn cho notifi  */}
@@ -61,9 +60,9 @@ function AppBar() {
             <NotificationsNoneIcon />
           </Badge>
         </Tooltip>
-
+        {/* bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) } */}
         <Tooltip title="Question">
-          <HelpOutLineIcon color="secondary" variant="dot" sx={{ cursor: 'pointer' }}>
+          <HelpOutLineIcon color="(theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' )" variant="dot" sx={{ cursor: 'pointer' }}>
           </HelpOutLineIcon>
         </Tooltip>
         <Profiles/>
