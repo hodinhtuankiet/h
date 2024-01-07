@@ -10,6 +10,7 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import {capitalizeFirstLetter } from '~/utils/capitalize-first-letter'
 // sx={{ bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) }}
 const MENU_STYLES = {
   color: 'primary.main',
@@ -24,7 +25,8 @@ const MENU_STYLES = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
+  // const board = board.board
   return (
     <Box px={2} sx={{
       width: '100%',
@@ -41,13 +43,13 @@ function BoardBar() {
         {/* chip này vừa có icon vừa có labal (đơn giản thế thôi) */}
         <Chip sx={MENU_STYLES}
           icon={<DashboardIcon />}
-          label="TuanKietDev Mern Stack Pro"
+          label= {board.title}
           clickable
         />
         {/* chip 2 */}
         <Chip sx={MENU_STYLES}
           icon={<LockOpenIcon />}
-          label="Public/Private Workspaces"
+          label={capitalizeFirstLetter(board.type)}
           clickable
         />
         {/* chip 3 */}

@@ -1,6 +1,6 @@
 import Card from '../ListCards/Card/Card'
 import Box from '@mui/material/Box'
-function ListCards() {
+function ListCards({ cards }) {
   return (
     <Box
       sx={{
@@ -20,15 +20,12 @@ function ListCards() {
         '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#bdc3c7'
         }
       }}>
-      <Card/>
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
+
+      {cards?.map(card => <Card key={card._id} card={ card } />)}
+
+      {/* Cái này là list ra card có ảnh và không có ảnh  */}
+      {/* <Card/> */}
+      {/* <Card temporaryHideMedia /> */}
     </Box>
   )
 }

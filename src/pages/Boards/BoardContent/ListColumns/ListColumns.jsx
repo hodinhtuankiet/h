@@ -1,9 +1,8 @@
 import Box from '@mui/material/Box'
-import * as React from 'react'
 import Column from './Column/Column'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { Button } from '@mui/material'
-function ListColumns() {
+function ListColumns({ columns }) {
   return (
     <Box
       sx={{
@@ -16,16 +15,13 @@ function ListColumns() {
         overflowY: 'hidden',
         // margin left thanh scroll ra 2px
         '&::-webkit-scrollbar-track': { m: 2 }
-      }}
-    >
-      {/* Column 1 */}
-      <Column/>
-      <Column/>
-      <Column/>
-      <Column/>
-      <Column/>
-      <Column/>
+      }}>
 
+      {/* map dữ liệu đổ ra columns  */}
+      {/* Khi chỉ có 1 tham số thì không cần (column) || => { } chuyền thành => () coi như là có return  */}
+      {/* Thường thì có return thì trước nó sẽ là xử lí gì gì đó , hoặc return 1 nhiều cái thì có dấu () không thì bỏ lun   */}
+      {/* columns: là truyền một props để truyền tiếp đến file Column.jsx tiếp theo  */}
+      {columns.map(column => <Column key={column._id} column={column}/>)}
 
       {/* Box Add New Card  */}
       <Box
