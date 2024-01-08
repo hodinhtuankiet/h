@@ -37,7 +37,7 @@ function BoardBar({ board }) {
       justifyContent: 'space-between',
       gap: 1,
       overflowX: 'auto',
-      borderTop: '1px solid #7f8c8d'
+      borderTop: '1px solid #dfe6e9'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         {/* chip này vừa có icon vừa có labal (đơn giản thế thôi) */}

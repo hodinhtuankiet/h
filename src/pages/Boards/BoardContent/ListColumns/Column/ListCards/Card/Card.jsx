@@ -11,7 +11,7 @@ function Card({ card }) {
   // nếu 1 trong 3 cái tồn tại thì True -> sẽ được show lên
   // Còn false thì nó sẽ không bị cái padding để ko dư thừa khoảng trắng
   const shouldShowCardActions = () => {
-    // dùng !! để return về true hoặc false nếu không thì nó sẽ return về 0 
+    // dùng !! để return về true hoặc false nếu không thì nó sẽ return về 0
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
   }
   return (

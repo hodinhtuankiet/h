@@ -17,8 +17,23 @@ import { ContentCopy, ContentPaste } from '@mui/icons-material'
 import * as React from 'react'
 import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/order-array'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 function Column({ column }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    // có id để biết đang kéo thả cái id nào
+    id: column._id,
+    // Spread syntax
+    data: { ...column }
+  })
+  const dndKitColumnStyles = {
+    transform: CSS.Translate.toString(transform),
+    transition
+  }
+
+
+  // JavaScript cho dropdown menu
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -30,17 +45,22 @@ function Column({ column }) {
 
   const orderedCards = mapOrder(column.cards, column.cardOrderIds, '_id')
   return (
-    // Column 1 
-    <Box sx={{
-      minWidth: '300px',
-      maxWidth: '300px',
-      // backgroundColor: (theme) => (theme.colorSchemes.dark.palette.primary.main),
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ),
-      ml: 2,
-      borderRadius: '6px',
-      height: 'fit-content',
-      maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
-    }}>
+    // Column 1
+    <Box
+      ref={setNodeRef}
+      style={dndKitColumnStyles}
+      {...attributes}
+      {...listeners}
+      sx={{
+        minWidth: '300px',
+        maxWidth: '300px',
+        // backgroundColor: (theme) => (theme.colorSchemes.dark.palette.primary.main),
+        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ),
+        ml: 2,
+        borderRadius: '6px',
+        height: 'fit-content',
+        maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
+      }}>
       <Box
         sx={{
           height: (theme) => theme.trello.columnHeaderHeight,
