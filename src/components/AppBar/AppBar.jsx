@@ -31,10 +31,10 @@ function AppBar() {
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <AppsIcon sx={ { color: 'primary.main' } }/>
-        <Box pl={1.5} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box pl={1.5} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={trelloLogo} inheritViewBox sx={ { color: 'primary.main' } } />
           {/* Text */}
-          <Typography pl={0.4} sx={{ fontSize: '1.2rem', fontWeight: 'bold', pl : '1' }}>Trello </Typography>
+          <Typography pl={0.9} sx={{ fontSize: '1.3rem', fontWeight: 'bold', pl : '1', color: 'primary.main' }}> KIET</Typography>
         </Box>
 
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap : 1 }}>

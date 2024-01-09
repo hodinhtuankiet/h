@@ -28,6 +28,8 @@ function Column({ column }) {
     data: { ...column }
   })
   const dndKitColumnStyles = {
+    // fix dựt dựt (kéo thả) trên mobile
+    touchAction: 'none',
     transform: CSS.Translate.toString(transform),
     transition
   }
