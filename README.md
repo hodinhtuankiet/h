@@ -14,8 +14,11 @@
 * "eslint-plugin-react": "^7.32.2"
 * "eslint-plugin-react-hooks": "^4.6.0"
 * "eslint-plugin-react-refresh": "^0.3.4"
-***Developing 
-<img src="https://github.com/hodinhtuankiet/trello-client/assets/120298180/304123f2-6a27-466f-8b81-8e7ed162fd00" alt="Order"/>
-
+***
+Developing  !!! <br/>
+Mobile 
+<img src="https://github.com/hodinhtuankiet/trello-client/assets/120298180/c372981e-c3b4-499a-9311-95f82530412e" alt="Mobile"/>
+PC
+<img src="https://github.com/hodinhtuankiet/trello-client/assets/120298180/304123f2-6a27-466f-8b81-8e7ed162fd00" alt="PC"/>
 
 Thanks!
