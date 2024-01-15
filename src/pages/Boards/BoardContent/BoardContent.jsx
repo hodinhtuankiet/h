@@ -12,7 +12,6 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_CARD'
 }
 function BoardContent({ board }) {
-
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   // Yêu cầu mouse di chuyền 10px thì mới kích hoạt event , fix TH click bị gọi handleDragEnd
@@ -36,17 +35,38 @@ function BoardContent({ board }) {
   useEffect(() => {
     setOrderedColumnsState(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
   }, [board])
+  const findColumnByCardId = (cardId) => {
+    // vì mảng nên sài find lun 
+    // đi vào columns ở mockdata rồi vào map cards , rồi map các _id của từng card xem nó có trùng với tham số cardId đưa vào không
+    return orderedColumn.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
+  }
   // xử lí khi bắt đầu click
   const handleDragStart = (event) => {
-    // console.log('handle Start', event)
+    console.log('handle Start', event)
     setActiveDragItemId(event?.active?.id)
     // Nếu nó tồn tại columnId thì Type nó là CARD còn không là COLUMN
-    setActiveDragItemIdType(event?.active?.current?.columnId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
+    setActiveDragItemIdType(event?.active?.data?.current?.columnId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
     setActiveDragItemIdData(event?.active?.data?.current)
+  }
+  const handleDragOver = (event) => {
+    if (activeDragItemIdType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) return
+    console.log('dragover', event)
+    // destrutering lấy ra các key của event
+    const { active, over } = event
+    if (!active || !over) return
+    // activeDraggingCardId là card đang được kéo 
+    const { id: activeDraggingCardId , data:{ current: activeDraggingCardData } } = active
+    // overCardId là card đang tương tác trên hoặc dưới so với card được kéo ở trên
+    const { id: overCardId } = over
+
+    const activeColumn = findColumnByCardId(activeDraggingCardId)
+    const overColumn = findColumnByCardId(overCardId)
+    console.log('activeColumn', activeColumn)
+    console.log('overColumn', overColumn)
   }
   // xử lí khi thả chuột
   const handleDragEnd = (event) => {
-    console.log('handle dragend Event', event)
+    // console.log('handle dragend Event', event)
     // destrutering lấy ra các key của event
     const { active, over } = event
     // Kiểm tra nếu không tồn tại over (kéo linh tinh ra ngoài thì return lun tránh lỗi)
@@ -78,7 +98,7 @@ function BoardContent({ board }) {
 
   // log ra để xem data
   // console.log('activeDragItemId: ', activeDragItemId )
-  // console.log('activeDragItemIdType: ', activeDragItemIdType )
+  console.log('activeDragItemIdType: ', activeDragItemIdType )
   // console.log('activeDragItemIdData: ', activeDragItemIdData )
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
@@ -95,6 +115,7 @@ function BoardContent({ board }) {
     // BoardContent
     <DndContext
       onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
       sensors={sensor}>
       <Box sx={{
@@ -113,12 +134,10 @@ function BoardContent({ board }) {
         {/* dropAnimation để khi kéo thả mượt hơn cho phân overlay  */}
         <DragOverlay dropAnimation={dropAnimation}>
           {(!activeDragItemIdType) && null}
-          {(activeDragItemId && activeDragItemIdType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column
-          // truyền một props activeDragItemIdData , là data của cả column nó để nó show cái bóng y hết ra
-          // vì đã import Column rồi nên props cũng là columnf
-            column={activeDragItemIdData}/>}
-          {(activeDragItemId && activeDragItemIdType === ACTIVE_DRAG_ITEM_TYPE.CARD) && <Card
-            card={activeDragItemIdData}/>}
+          {/*  truyền một props activeDragItemIdData , là data của cả column nó để nó show cái bóng y hết ra
+           vì đã import Column rồi nên props cũng là column */}
+          {(activeDragItemIdType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemIdData}/>}
+          {(activeDragItemIdType === ACTIVE_DRAG_ITEM_TYPE.CARD) && <Card card={activeDragItemIdData}/>}
         </DragOverlay>
       </Box>
     </DndContext>
