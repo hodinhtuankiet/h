@@ -36,13 +36,13 @@ function BoardContent({ board }) {
     setOrderedColumnsState(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
   }, [board])
   const findColumnByCardId = (cardId) => {
-    // vì mảng nên sài find lun 
+    // vì mảng nên sài find lun
     // đi vào columns ở mockdata rồi vào map cards , rồi map các _id của từng card xem nó có trùng với tham số cardId đưa vào không
     return orderedColumn.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
   }
   // xử lí khi bắt đầu click
   const handleDragStart = (event) => {
-    console.log('handle Start', event)
+    // console.log('handle Start', event)
     setActiveDragItemId(event?.active?.id)
     // Nếu nó tồn tại columnId thì Type nó là CARD còn không là COLUMN
     setActiveDragItemIdType(event?.active?.data?.current?.columnId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
@@ -50,19 +50,34 @@ function BoardContent({ board }) {
   }
   const handleDragOver = (event) => {
     if (activeDragItemIdType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) return
-    console.log('dragover', event)
+    // console.log('dragover', event)
     // destrutering lấy ra các key của event
     const { active, over } = event
     if (!active || !over) return
-    // activeDraggingCardId là card đang được kéo 
-    const { id: activeDraggingCardId , data:{ current: activeDraggingCardData } } = active
+    // activeDraggingCardId là card đang được kéo
+    const { id: activeDraggingCardId, data:{ current: activeDraggingCardData } } = active
     // overCardId là card đang tương tác trên hoặc dưới so với card được kéo ở trên
-    const { id: overCardId } = over
+    const { id: overCardIdItem } = over
 
+    // bản chất là để biết cái card đang kéo sang id của column nào
     const activeColumn = findColumnByCardId(activeDraggingCardId)
-    const overColumn = findColumnByCardId(overCardId)
-    console.log('activeColumn', activeColumn)
-    console.log('overColumn', overColumn)
+    const overColumn = findColumnByCardId(overCardIdItem)
+
+    if (!activeColumn || !overColumn ) return
+    // kiểm tra kéo card từ 2 column khác nhau thì xử lí logic
+    if (activeColumn._id !== overColumn._id) {
+      setOrderedColumnsState(prevColumns => {
+        const overCardId = overColumn?.cards?.findIndex( card => card.id === overCardIdItem)
+
+        let newCardIndex 
+        const isBelowOverItem = active.rect.current.translated && active.rect.current.translated.top > over.rect.top + over.rect.height
+        const modifier = isBelowOverItem ? 1 : 0
+        // overColumn : số card
+        newCardIndex = overCardId>=0 ? overCardId + modifier : overColumn?.card?.length + 1
+
+        return [...prevColumns]
+      })
+    }
   }
   // xử lí khi thả chuột
   const handleDragEnd = (event) => {
