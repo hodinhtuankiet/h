@@ -85,21 +85,24 @@ function BoardContent({ board }) {
         // array after drag
         const nextOverColumns = nextColumns.find(column => column._id === overColumn._id)
 
+
+        // Column cũ
         if (activeColumns) {
           // xóa card ở cái column active (là column cũ) , lúc kéo sang column khác
-          // filter là tạo ra mảng mới có card._id === activeDraggingCardId
+          // filter là tạo ra mảng mới có card._id !== activeDraggingCardId (xóa đi activeDraggingCardId)
           activeColumns.cards = activeColumns.cards.filter(card => card._id !== activeDraggingCardId)
           // cập nhật lại mảng cardOrderIds cũ cho chuẩn dữ liệu
           activeColumns.cardOrderIds = activeColumns.cards.map(card => card._id)
         }
+        // Column mới
         if (nextOverColumns) {
           // kiểm tra card đang kéo đã có ở column muốn over vào chưa , nếu có thì xóa nó trước
           nextOverColumns.cards = nextOverColumns.cards.filter(card => card._id !== activeDraggingCardId)
           // dùng toSpliced thay vì splice vì nó tạo ra một mảng mới từ mảng cũ
+          // chèn activeDraggingCardData vào mảng nextOverColumns.cards tại vị trí newCardIndex và loại bỏ 0 phần tử
           nextOverColumns.cards = nextOverColumns.cards.toSpliced(newCardIndex, 0, activeDraggingCardData)
           // cập nhật lại mảng cardOrderIds mới cho chuẩn dữ liệu
           nextOverColumns.cardOrderIds = nextOverColumns.cards.map(card => card._id)
-
         }
         return nextColumns
       })

@@ -43,13 +43,13 @@ function BoardBar({ board }) {
         {/* chip này vừa có icon vừa có labal (đơn giản thế thôi) */}
         <Chip sx={MENU_STYLES}
           icon={<DashboardIcon />}
-          label= {board.title}
+          // label= {board.title}
           clickable
         />
         {/* chip 2 */}
         <Chip sx={MENU_STYLES}
           icon={<LockOpenIcon />}
-          label={capitalizeFirstLetter(board.type)}
+          // label={capitalizeFirstLetter(board.type)}
           clickable
         />
         {/* chip 3 */}
