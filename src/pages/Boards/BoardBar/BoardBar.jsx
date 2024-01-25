@@ -10,11 +10,11 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
-import {capitalizeFirstLetter } from '~/utils/capitalize-first-letter'
+import { capitalizeFirstLetter } from '~/utils/capitalize-first-letter'
 // sx={{ bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) }}
 const MENU_STYLES = {
   color: 'primary.main',
-  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) ,
+  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ),
   paddingX: '5px',
   // icon ở trong chip
   '& .MuiSvgIcon-root' : {
@@ -41,15 +41,17 @@ function BoardBar({ board }) {
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         {/* chip này vừa có icon vừa có labal (đơn giản thế thôi) */}
-        <Chip sx={MENU_STYLES}
-          icon={<DashboardIcon />}
-          // label= {board.title}
-          clickable
-        />
+        <Tooltip title={board?.description}>
+          <Chip sx={MENU_STYLES}
+            icon={<DashboardIcon />}
+            label= {board?.title}
+            clickable
+          />
+        </Tooltip>
         {/* chip 2 */}
         <Chip sx={MENU_STYLES}
           icon={<LockOpenIcon />}
-          // label={capitalizeFirstLetter(board.type)}
+          label={capitalizeFirstLetter(board?.type)}
           clickable
         />
         {/* chip 3 */}

@@ -19,8 +19,28 @@ import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/order-array'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
+import { TextField } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
 function Column({ column }) {
+  // Xử lí API , ĐÓNG MỞ KHI CLICK VÀ ADD NEW CARD
+  const [openAddNewCard, setOpenNewCard] = useState(false)
+  // When click , it's will switch true -> false or false -> true
+  const toggleOpenNewCard = () => setOpenNewCard(!openAddNewCard)
+
+  const [newCardTitle, setnewCardTitle] = useState('')
+
+  const AddNewCard = () => {
+    if (!newCardTitle) {
+      // console.error('ádasd')
+      return
+    }
+    console.log(newCardTitle)
+    // gọi API here
+  }
+
+
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     // có id để biết đang kéo thả cái id nào
     id: column._id,
@@ -35,6 +55,7 @@ function Column({ column }) {
     height: '100%',
     // đang kéo thì column mờ đi
     opacity: isDragging ? 0.5 : undefined
+    // borderRadius: 'dark' ? '#333643' : '#ebecf0'
   }
 
   // JavaScript cho dropdown menu
@@ -65,6 +86,7 @@ function Column({ column }) {
           height: 'fit-content',
           maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
         }}>
+        {/* Header  */}
         <Box
           sx={{
             height: (theme) => theme.trello.columnHeaderHeight,
@@ -133,21 +155,132 @@ function Column({ column }) {
         {/* cars: truyền props đến file ListCard.jsx  */}
         <ListCards cards={ orderedCards }/>
 
-
         {/* FOOTER  */}
         <Box
           sx={{
-            height: (theme) => theme.trello.columnFooterHeight,
-            p: 2,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+            height: openAddNewCard ? (theme) => theme.trello.columnFooterHeightToggle : (theme) => theme.trello.columnFooterHeight,
+            p: 2
           }}
         >
-          <Button sx={{ color: 'text.primary' }} startIcon={<AddCardIcon />}>Add New Card</Button>
-          <Tooltip title="Drag to move ">
-            <DragHandleIcon sx={{ cursor: 'pointer' }}/>
-          </Tooltip>
+          {!openAddNewCard ? (
+            <Box
+              onClick={toggleOpenNewCard}
+              sx={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              <Button sx={{ color: 'text.primary' }} startIcon={<AddCardIcon />}>
+              Add New Card
+              </Button>
+              <Tooltip title="Drag to move ">
+                <DragHandleIcon sx={{ cursor: 'pointer' }} />
+              </Tooltip>
+            </Box>
+          ) : (
+            <Box sx={{
+              // height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              gap: 1.3,
+              minWidth: '250px',
+              maxWidth: '250px',
+              height: 'fit-content',
+              overflow: 'unset',
+              // minHeight: openAddNewCard ? 'auto' : (theme) => theme.trello.columnFooterHeight
+              maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
+            }}>
+              {/* Title Card  */}
+              <TextField fullWidth id="outlined-basic"
+                label="Add new card"
+                type="search"
+                size='small'
+                variant='outlined'
+                autoFocus
+                value={newCardTitle}
+                // khi onChange value trong TextField thì gán lại value
+                onChange={(e) => setnewCardTitle(e.target.value)}
+                sx={{
+                  minWidth: 100,
+                  '& label': { color: 'primary' },
+                  '& input': { color: 'primary' },
+                  // label khi focused vào
+                  '& label.Mui-focused': { color: 'primary' },
+                  '& .MuiOutlinedInput-root': {
+                  // border khi chưa hover
+                    '& fieldset': { borderColor: 'primary' },
+                    // khi hover vào
+                    '&:hover fieldset': { borderColor: 'white' },
+
+                    '&.Mui-focused fieldset': { borderColor: 'white' }
+                  }
+                }}/>
+              {/* Description Card  */}
+              <TextField fullWidth id="outlined-basic"
+                label="Add description card"
+                type="search"
+                size='small'
+                variant='outlined'
+                autoFocus
+                value={newCardTitle}
+                // khi onChange value trong TextField thì gán lại value
+                onChange={(e) => setnewCardTitle(e.target.value)}
+                sx={{
+                  minWidth: 100,
+                  minheight: '20em',
+                  '& label': { color: 'primary' },
+                  '& input': { color: 'primary' },
+                  // label khi focused vào
+                  '& label.Mui-focused': { color: 'primary' },
+                  '& .MuiOutlinedInput-root': {
+                  // border khi chưa hover
+                    '& fieldset': { borderColor: 'primary' },
+                    // khi hover vào
+                    '&:hover fieldset': { borderColor: 'white' },
+
+                    '&.Mui-focused fieldset': { borderColor: 'white' }
+                  }
+                }}/>
+              <Box sx={{ marginRight: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Button
+                  onClick={AddNewCard}
+                  variant='contained'
+                  size='small'
+                  sx={{
+                    color: 'primary.main', // Đặt màu chữ thành màu đen
+                    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#636e72' : 'white'), // Đặt màu nền thành màu xám
+                    boxShadow: 'none',
+                    border: '1px solid',
+                    borderColor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : 'primary.main'),
+                    '&:hover': {
+                      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2d3436' : '#ebecf0')
+                    },
+                    typography: {
+                      fontSize: '14px'
+                    // textTransform: 'none'
+                    // Đặt kích thước chữ là 12px
+                    }
+                  }}
+                >
+              Add new card
+                </Button>
+                <CloseIcon
+                  fontSize='small'
+                  sx={{
+                    color: 'primary',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      color: 'red'
+                    }
+                  }}
+                  onClick={toggleOpenNewCard}
+                />
+              </Box>
+            </Box>
+          )}
         </Box>
       </Box>
     </div>

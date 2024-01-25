@@ -40,7 +40,11 @@ function Card({ card }) {
       sx={{
         cursor: 'pointer',
         boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-        overflow: 'unset'
+        overflow: 'unset',
+        border: '1px solid transparent',
+        '&:hover': {
+          borderColor: (theme) => theme.palette.primary.main
+        }
       }}>
       {/* nếu như tồn tại card cover thì có ảnh cardMedia  */}
       {card?.cover &&
@@ -49,8 +53,7 @@ function Card({ card }) {
         {/* Title Card  */}
         <Typography>{card?.title}</Typography>
         <Typography variant="body2" color="text.secondary">
-      Lizards are a widespread group of squamate reptiles, with over 6,000
-      species, ranging across all continents except Antarctica
+          {card?.description}
         </Typography>
       </CardContent>
 

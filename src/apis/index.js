@@ -21,4 +21,4 @@ export const fetchBoardDetailsAPI = async (boardId) => {
     // Propagate the error to the caller if needed
     throw error
   }
-};
+}
