@@ -5,6 +5,8 @@ import { Button, TextField } from '@mui/material'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify'
+
 function ListColumns({ columns }) {
   const [openAddNewColumn, setOpenNewColumn] = useState(false)
   // When click , it's will switch true -> false or false -> true
@@ -14,7 +16,7 @@ function ListColumns({ columns }) {
 
   const AddNewColumn = () => {
     if (!newColumnTitle) {
-      // console.error('ádasd')
+      toast.error('Title Column Do Not Empty !', { position: 'bottom-left' })
       return
     }
     console.log(newColumnTitle)

@@ -22,7 +22,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { useState } from 'react'
 import { TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-
+import { toast } from 'react-toastify'
 function Column({ column }) {
   // Xử lí API , ĐÓNG MỞ KHI CLICK VÀ ADD NEW CARD
   const [openAddNewCard, setOpenNewCard] = useState(false)
@@ -31,9 +31,11 @@ function Column({ column }) {
 
   const [newCardTitle, setnewCardTitle] = useState('')
 
+  const [newCardDescription, setnewCardDescription] = useState('')
+
   const AddNewCard = () => {
     if (!newCardTitle) {
-      // console.error('ádasd')
+      toast.error('Title Card Do Not Empty !')
       return
     }
     console.log(newCardTitle)
@@ -195,7 +197,7 @@ function Column({ column }) {
             }}>
               {/* Title Card  */}
               <TextField fullWidth id="outlined-basic"
-                label="Add new card"
+                label="Add title card"
                 type="search"
                 size='small'
                 variant='outlined'
@@ -205,7 +207,7 @@ function Column({ column }) {
                 onChange={(e) => setnewCardTitle(e.target.value)}
                 sx={{
                   minWidth: 100,
-                  '& label': { color: 'primary' },
+                  '& label': { color: 'black' },
                   '& input': { color: 'primary' },
                   // label khi focused vào
                   '& label.Mui-focused': { color: 'primary' },
@@ -223,15 +225,18 @@ function Column({ column }) {
                 label="Add description card"
                 type="search"
                 size='small'
-                variant='outlined'
+                // variant='outlined'
                 autoFocus
-                value={newCardTitle}
+                multiline
+                rows={4}
+                variant="filled"
+                value={newCardDescription}
                 // khi onChange value trong TextField thì gán lại value
-                onChange={(e) => setnewCardTitle(e.target.value)}
+                onChange={(e) => setnewCardDescription(e.target.value)}
                 sx={{
                   minWidth: 100,
                   minheight: '20em',
-                  '& label': { color: 'primary' },
+                  '& label': { color: 'black' },
                   '& input': { color: 'primary' },
                   // label khi focused vào
                   '& label.Mui-focused': { color: 'primary' },
