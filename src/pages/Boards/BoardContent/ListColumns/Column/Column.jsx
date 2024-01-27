@@ -23,7 +23,7 @@ import { useState } from 'react'
 import { TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
-function Column({ column }) {
+function Column({ column, funcCreateNewCard }) {
   // Xử lí API , ĐÓNG MỞ KHI CLICK VÀ ADD NEW CARD
   const [openAddNewCard, setOpenNewCard] = useState(false)
   // When click , it's will switch true -> false or false -> true
@@ -33,13 +33,23 @@ function Column({ column }) {
 
   const [newCardDescription, setnewCardDescription] = useState('')
 
-  const AddNewCard = () => {
+  const AddNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Title Card Do Not Empty !')
       return
     }
-    console.log(newCardTitle)
-    // gọi API here
+    // new data card
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id,
+      description: newCardDescription
+    }
+    // props được truyền từ BoardContent
+    await funcCreateNewCard(newCardData)
+
+
+    toggleOpenNewCard()
+    setnewCardTitle('')
   }
 
 
@@ -86,6 +96,9 @@ function Column({ column }) {
           ml: 2,
           borderRadius: '6px',
           height: 'fit-content',
+          // overflowY: openAddNewCard ? 'auto' : 'unset',
+          overflowX: 'hidden',
+          overflowY: 'hidden',
           maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
         }}>
         {/* Header  */}
@@ -161,7 +174,10 @@ function Column({ column }) {
         <Box
           sx={{
             height: openAddNewCard ? (theme) => theme.trello.columnFooterHeightToggle : (theme) => theme.trello.columnFooterHeight,
-            p: 2
+            p: 2,
+            minWidth: '300px',
+            // overflow: openAddNewCard ? 'auto' : 'unset'
+            // maxHeight: '150px'
           }}
         >
           {!openAddNewCard ? (
@@ -191,7 +207,7 @@ function Column({ column }) {
               minWidth: '250px',
               maxWidth: '250px',
               height: 'fit-content',
-              overflow: 'unset',
+              // overflow: 'unset',
               // minHeight: openAddNewCard ? 'auto' : (theme) => theme.trello.columnFooterHeight
               maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
             }}>
@@ -207,7 +223,8 @@ function Column({ column }) {
                 onChange={(e) => setnewCardTitle(e.target.value)}
                 sx={{
                   minWidth: 100,
-                  '& label': { color: 'black' },
+                  flexShrink: 0,
+                  '& label': { color: (theme) => (theme.palette.mode === 'dark' ? 'white' : '#636e72') },
                   '& input': { color: 'primary' },
                   // label khi focused vào
                   '& label.Mui-focused': { color: 'primary' },
@@ -235,8 +252,10 @@ function Column({ column }) {
                 onChange={(e) => setnewCardDescription(e.target.value)}
                 sx={{
                   minWidth: 100,
-                  minheight: '20em',
-                  '& label': { color: 'black' },
+                  minheight: 50,
+                  flexShrink: 0,
+                  // height: 'fit-content',
+                  '& label': { color: (theme) => (theme.palette.mode === 'dark' ? 'white' : '#636e72') },
                   '& input': { color: 'primary' },
                   // label khi focused vào
                   '& label.Mui-focused': { color: 'primary' },
@@ -263,6 +282,7 @@ function Column({ column }) {
                     '&:hover': {
                       bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2d3436' : '#ebecf0')
                     },
+                    flexShrink: 0,
                     typography: {
                       fontSize: '14px'
                     // textTransform: 'none'

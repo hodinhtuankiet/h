@@ -56,7 +56,6 @@ function Card({ card }) {
           {card?.description}
         </Typography>
       </CardContent>
-
       {/*Example: ![].length -> 0(False) True phủ định  */}
       {/* ![].length -> 0(True) False  */}
       {/* ![1].length -> 1 True  */}

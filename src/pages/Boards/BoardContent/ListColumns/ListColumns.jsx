@@ -7,21 +7,31 @@ import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, funcCreateNewColumn, funcCreateNewCard }) {
   const [openAddNewColumn, setOpenNewColumn] = useState(false)
   // When click , it's will switch true -> false or false -> true
   const toggleOpenNewColumn = () => setOpenNewColumn(!openAddNewColumn)
 
   const [newColumnTitle, setnewColumnTitle] = useState('')
 
-  const AddNewColumn = () => {
+  const AddNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Title Column Do Not Empty !', { position: 'bottom-left' })
       return
     }
-    console.log(newColumnTitle)
-    // gọi API here
+    // New Data of Column
+    const newColumnData = {
+      title: newColumnTitle
+    }
+    // function funcCreateNewColumn được gọi props từ BoardContent tới
+    await funcCreateNewColumn(newColumnData)
+
+    // close Box Add New Column
+    toggleOpenNewColumn()
+    setnewColumnTitle('')
   }
+
+
   return (
     // trong TH này là list nằm nghang nên dùng horizontal list sorting
   // SortableContext yêu cầu items là một dạng mảng ['id-1,'id-2'] chứ không phải [{id:'id-1}'], [{id:'id-2}']
@@ -44,7 +54,10 @@ function ListColumns({ columns }) {
         {/* Khi chỉ có 1 tham số thì không cần (column) || => { } chuyền thành => () coi như là có return  */}
         {/* Thường thì có return thì trước nó sẽ là xử lí gì gì đó , hoặc return 1 nhiều cái thì có dấu () không thì bỏ lun   */}
         {/* columns: là truyền một props để truyền tiếp đến file Column.jsx tiếp theo  */}
-        {columns.map(column => <Column key={column._id} column={column}/>)}
+        {columns.map(column => <Column key={column._id}
+          column={column}
+          funcCreateNewCard={funcCreateNewCard}
+        />)}
         {/* Box Add New Card  */}
         {/* Now openAddNewColumn isFalse -> when click Box it will swith to true */}
         {!openAddNewColumn

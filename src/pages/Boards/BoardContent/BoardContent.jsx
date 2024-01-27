@@ -11,7 +11,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_CARD'
 }
-function BoardContent({ board }) {
+function BoardContent({ board, funcCreateNewColumn, funcCreateNewCard }) {
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   // Yêu cầu mouse di chuyền 10px thì mới kích hoạt event , fix TH click bị gọi handleDragEnd
@@ -173,7 +173,11 @@ function BoardContent({ board }) {
         overflowY: 'hidden',
         p: '10px 0'
       }}>
-        <ListColumns columns={orderedColumn}/>
+        <ListColumns
+          columns={orderedColumn}
+          funcCreateNewColumn={funcCreateNewColumn}
+          funcCreateNewCard={funcCreateNewCard}
+        />
         {/* Phần dữ chổ , khi kéo thì có cái bóng của nó  */}
         {/* dropAnimation để khi kéo thả mượt hơn cho phân overlay  */}
         <DragOverlay dropAnimation={dropAnimation}>
