@@ -47,9 +47,9 @@ function Column({ column, funcCreateNewCard }) {
     // props được truyền từ BoardContent
     await funcCreateNewCard(newCardData)
 
-
     toggleOpenNewCard()
     setnewCardTitle('')
+    setnewCardDescription('')
   }
 
 
@@ -96,9 +96,9 @@ function Column({ column, funcCreateNewCard }) {
           ml: 2,
           borderRadius: '6px',
           height: 'fit-content',
-          // overflowY: openAddNewCard ? 'auto' : 'unset',
+          overflowY: openAddNewCard ? 'auto' : 'unset',
           overflowX: 'hidden',
-          overflowY: 'hidden',
+          // overflowY: 'hidden',
           maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
         }}>
         {/* Header  */}
