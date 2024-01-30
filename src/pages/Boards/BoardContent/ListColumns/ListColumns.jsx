@@ -7,7 +7,7 @@ import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
-function ListColumns({ columns, funcCreateNewColumn, funcCreateNewCard }) {
+function ListColumns({ columns, funcCreateNewColumn, funcCreateNewCard, deleteColumnDetails }) {
   const [openAddNewColumn, setOpenNewColumn] = useState(false)
   // When click , it's will switch true -> false or false -> true
   const toggleOpenNewColumn = () => setOpenNewColumn(!openAddNewColumn)
@@ -57,6 +57,7 @@ function ListColumns({ columns, funcCreateNewColumn, funcCreateNewCard }) {
         {columns.map(column => <Column key={column._id}
           column={column}
           funcCreateNewCard={funcCreateNewCard}
+          deleteColumnDetails={deleteColumnDetails}
         />)}
         {/* Box Add New Card  */}
         {/* Now openAddNewColumn isFalse -> when click Box it will swith to true */}

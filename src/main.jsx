@@ -6,13 +6,18 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 import theme from './theme'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { ConfirmProvider } from 'material-ui-confirm'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <CssVarsProvider theme={theme}>
-      <CssBaseline />
-      <App />
-      <ToastContainer autoClose={3500}/>
+      {/* Config materil dialog show delete  */}
+      <ConfirmProvider>
+        <CssBaseline />
+        <App />
+        {/* Message notification */}
+        <ToastContainer autoClose={3500}/>
+      </ConfirmProvider>
     </CssVarsProvider>
   </React.StrictMode>
 )

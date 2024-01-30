@@ -15,13 +15,13 @@ function _id() {
     const boardId = '65b262a107e5cd6761df3266'
     fetchBoardDetailsAPI(boardId).then(board => {
       // Handle when dragging a card into an empty column
-      board.columns.forEach(column => {
-        if (isEmpty(column.cards)) {
-          column.cards = [generatePlaceholderCard(column)]
-          column.cardOrderIds = [generatePlaceholderCard(column)._id]
-        }
-      })
-      console.log(board)
+      // board.columns.forEach(column => {
+      //   if (isEmpty(column.cards)) {
+      //     column.cards = [generatePlaceholderCard(column)]
+      //     column.cardOrderIds = [generatePlaceholderCard(column)._id]
+      //   }
+      // })
+      // console.log(board)
       setBoard(board)
       // console.log(response)
     })
@@ -73,7 +73,10 @@ function _id() {
 
     setBoard(copyPropertiesBoard)
   }
-
+  const deleteColumnDetails = (columnId) => {
+    //
+    console.log('asdsa ds', columnId)
+  }
   return (
     <Container maxWidth={false} disableGutters sx={{ height: '100vh' }}>
       <AppBar/>
@@ -84,7 +87,7 @@ function _id() {
         board={board}
         funcCreateNewColumn={createNewColumn}
         funcCreateNewCard={createNewCard}
-
+        deleteColumnDetails={deleteColumnDetails}
       />
     </Container>
   )

@@ -22,8 +22,11 @@ import { CSS } from '@dnd-kit/utilities'
 import { useState } from 'react'
 import { TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+// Cấu hình toast-toastify
 import { toast } from 'react-toastify'
-function Column({ column, funcCreateNewCard }) {
+// CONFIG MATERIAL DIALOG
+import { useConfirm } from 'material-ui-confirm'
+function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
   // Xử lí API , ĐÓNG MỞ KHI CLICK VÀ ADD NEW CARD
   const [openAddNewCard, setOpenNewCard] = useState(false)
   // When click , it's will switch true -> false or false -> true
@@ -50,6 +53,26 @@ function Column({ column, funcCreateNewCard }) {
     toggleOpenNewCard()
     setnewCardTitle('')
     setnewCardDescription('')
+  }
+  const confirm = useConfirm()
+  const handleDeleteColumn = () => {
+    confirm({
+      // description: 'This action is permanent!',
+      title: 'Delete Column?',
+      allowClose: false,
+      content: 'This action will permanently delete your Column. Are you sure?',
+      confirmationButtonProps: { color:'primary', variant: 'outlined' },
+
+      description: 'This action is permanent!',
+      confirmationKeyword: 'column'
+    })
+      .then(() => {
+        deleteColumnDetails(column._id)
+      })
+      .catch(() => {
+        /* ... */
+        deleteColumnDetails(column._id)
+      })
   }
 
 
@@ -132,12 +155,21 @@ function Column({ column, funcCreateNewCard }) {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+              onClick={handleClose}
               MenuListProps={{
                 'aria-labelledby': 'basic-button-workspaces'
               }}
             >
-              <MenuItem>
-                <ListItemIcon><AddCardIcon fontSize="small" /></ListItemIcon>
+              <MenuItem
+                sx={{
+                  '&:hover':{
+                    color: '#2980b9',
+                    '& .add-foreverIcon':{ color: '#2980b9' }
+                  }
+                }}
+                onClick={toggleOpenNewCard}
+              >
+                <ListItemIcon><AddCardIcon className='add-foreverIcon' fontSize="small" /></ListItemIcon>
                 <ListItemText>Add New Card</ListItemText>
               </MenuItem>
               <MenuItem>
@@ -153,9 +185,17 @@ function Column({ column, funcCreateNewCard }) {
                 <ListItemText>Paste</ListItemText>
               </MenuItem>
               <Divider />
-              <MenuItem>
-                <ListItemIcon><DeleteForeverIcon fontSize="small" /></ListItemIcon>
-                <ListItemText>Remove this column</ListItemText>
+              <MenuItem
+                sx={{
+                  '&:hover':{
+                    color: 'warning.dark',
+                    '& .delete-foreverIcon':{ color: 'warning.dark' }
+                  }
+                }}
+                onClick={handleDeleteColumn}
+              >
+                <ListItemIcon><DeleteForeverIcon className='delete-foreverIcon' fontSize="small" /></ListItemIcon>
+                <ListItemText>Delete this column</ListItemText>
               </MenuItem>
               <Divider />
               <MenuItem>
@@ -169,13 +209,12 @@ function Column({ column, funcCreateNewCard }) {
         {/* CONTENT - lIST CARD */}
         {/* cars: truyền props đến file ListCard.jsx  */}
         <ListCards cards={ orderedCards }/>
-
         {/* FOOTER  */}
         <Box
           sx={{
             height: openAddNewCard ? (theme) => theme.trello.columnFooterHeightToggle : (theme) => theme.trello.columnFooterHeight,
             p: 2,
-            minWidth: '300px',
+            minWidth: '300px'
             // overflow: openAddNewCard ? 'auto' : 'unset'
             // maxHeight: '150px'
           }}
@@ -268,6 +307,7 @@ function Column({ column, funcCreateNewCard }) {
                     '&.Mui-focused fieldset': { borderColor: 'white' }
                   }
                 }}/>
+              {/* Button add new card  */}
               <Box sx={{ marginRight: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Button
                   onClick={AddNewCard}
