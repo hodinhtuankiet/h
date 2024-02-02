@@ -63,15 +63,14 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
       content: 'This action will permanently delete your Column. Are you sure?',
       confirmationButtonProps: { color:'primary', variant: 'outlined' },
 
-      description: 'This action is permanent!',
-      confirmationKeyword: 'column'
+      // description: 'This action is permanent!',
+      // confirmationKeyword: 'column'
     })
       .then(() => {
         deleteColumnDetails(column._id)
       })
       .catch(() => {
         /* ... */
-        deleteColumnDetails(column._id)
       })
   }
 

@@ -4,9 +4,10 @@ import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
-import { createNewColumnAPI, fetchBoardDetailsAPI, createNewCardAPI } from '~/apis'
+import { createNewColumnAPI, fetchBoardDetailsAPI, createNewCardAPI, deleteColumnAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatter'
 import { isEmpty } from 'lodash'
+import { toast } from 'react-toastify'
 function _id() {
   const [board, setBoard] = useState(null)
 
@@ -73,10 +74,40 @@ function _id() {
 
     setBoard(copyPropertiesBoard)
   }
-  const deleteColumnDetails = (columnId) => {
-    //
-    console.log('asdsa ds', columnId)
+  const deleteColumnDetails = async (columnId) => {
+    try {
+      // Create a copy of the board state to avoid mutating the original state directly
+      const newBoard = { ...board }
+
+      // Update local state to reflect the deletion of the column
+      newBoard.columns = newBoard.columns.filter((column) => column._id !== columnId)
+      newBoard.columnOrderIds = newBoard.columnOrderIds.filter((_id) => _id !== columnId)
+
+      // Update the state only after the API call is successful
+      const deleteResult = await deleteColumnAPI(columnId)
+
+      // Check if the deleteResult contains the expected information
+      if (deleteResult && deleteResult.deleteResult) {
+        // Log the result and update the state
+        console.log('deleteColumnDetailsAPI:', deleteResult)
+        setBoard(newBoard)
+
+        // Display a success message to the user
+        toast.success(deleteResult.deleteResult)
+      } else {
+        // Handle the case where the deleteResult is not as expected
+        console.error('Unexpected delete result:', deleteResult)
+        // You might want to display an error message to the user here
+        // toast.error('Failed to delete column. Please try again.')
+      }
+    } catch (error) {
+      // Handle errors during the API call or state update
+      console.error('Error deleting column:', error)
+      // You might want to display an error message to the user here
+      // toast.error('An error occurred while deleting the column.')
+    }
   }
+
   return (
     <Container maxWidth={false} disableGutters sx={{ height: '100vh' }}>
       <AppBar/>
