@@ -26,8 +26,22 @@ import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 // CONFIG MATERIAL DIALOG
 import { useConfirm } from 'material-ui-confirm'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import { styled } from '@mui/material/styles'
+
 function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
   // Xử lí API , ĐÓNG MỞ KHI CLICK VÀ ADD NEW CARD
+  const [imageSrc, setImageSrc] = useState(null)
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImageSrc(reader.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
   const [openAddNewCard, setOpenNewCard] = useState(false)
   // When click , it's will switch true -> false or false -> true
   const toggleOpenNewCard = () => setOpenNewCard(!openAddNewCard)
@@ -61,7 +75,7 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
       title: 'Delete Column?',
       allowClose: false,
       content: 'This action will permanently delete your Column. Are you sure?',
-      confirmationButtonProps: { color:'primary', variant: 'outlined' },
+      confirmationButtonProps: { color:'primary', variant: 'outlined' }
 
       // description: 'This action is permanent!',
       // confirmationKeyword: 'column'
@@ -73,8 +87,37 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
         /* ... */
       })
   }
-
-
+  const VisuallyHiddenInput = styled('input')({
+    // clip: 'rect(0 0 0 0)',
+    // clipPath: 'inset(50%)',
+    height: 1,
+    // overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 1,
+    whiteSpace: 'nowrap',
+    width: 1 })
+  const ImageContainer = styled('div')({
+    marginTop: '5px',
+    textAlign: 'left',
+    borderRadius: '100px'
+  })
+  const CloseButton = styled('button')({
+    position: 'absolute',
+    top: '5px',
+    right: '5px',
+    cursor: 'pointer',
+    background: 'none',
+    border: 'none',
+    fontSize: '16px',
+    color: 'white',
+    padding: '5px',
+    borderRadius: '50%',
+    transition: 'opacity 0.3s',
+    '&:hover': {
+      opacity: 0.8
+    }
+  })
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     // có id để biết đang kéo thả cái id nào
     id: column._id,
@@ -91,7 +134,9 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
     opacity: isDragging ? 0.5 : undefined
     // borderRadius: 'dark' ? '#333643' : '#ebecf0'
   }
-
+  const handleImageClick = () => {
+    setImageSrc(null)
+  }
   // JavaScript cho dropdown menu
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
@@ -275,6 +320,25 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
                     '&.Mui-focused fieldset': { borderColor: 'white' }
                   }
                 }}/>
+              {/* Upload File  */}
+              <Button sx={{ marginRight: 13, color:'white', fontSize: 12, width: '145px' }} size='small' component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+        Upload Images
+                <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+              </Button>
+              {imageSrc && (
+                <ImageContainer>
+                  {imageSrc && (
+                    <>
+                      <CloseButton onClick={handleImageClick}>&times;</CloseButton>
+                      <img
+                        src={imageSrc}
+                        alt="Uploaded"
+                        style={{ maxWidth: '100%', maxHeight: '200px', paddingBottom: 0 }}
+                      />
+                    </>
+                  )}
+                </ImageContainer>
+              )}
               {/* Description Card  */}
               <TextField fullWidth id="outlined-basic"
                 label="Add description card"
@@ -307,7 +371,7 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
                   }
                 }}/>
               {/* Button add new card  */}
-              <Box sx={{ marginRight: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ marginRight: 'auto', display: 'flex', alignItems: 'center', gap: 1, paddingBottom:1.9 }}>
                 <Button
                   onClick={AddNewCard}
                   variant='contained'
