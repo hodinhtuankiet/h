@@ -57,7 +57,8 @@ function _id() {
       // đối tượng dataCardAPI với thêm một thuộc tính mới boardId.
       ...dataCardAPI,
       // khi tạo mới Column và Card dều có boardId nên phải truyền props như vậy
-      boardId: board._id
+      boardId: board._id,
+      images: board.images ? [...board.images] : []
     })
     // create copies without changing the data
     // SET STATE OF COLUMNS

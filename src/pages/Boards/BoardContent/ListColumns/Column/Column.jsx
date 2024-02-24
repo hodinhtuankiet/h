@@ -38,6 +38,7 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
       const reader = new FileReader()
       reader.onloadend = () => {
         setImageSrc(reader.result)
+        console.log('Image Src:', reader.result)
       }
       reader.readAsDataURL(file)
     }
@@ -59,14 +60,23 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
     const newCardData = {
       title: newCardTitle,
       columnId: column._id,
-      description: newCardDescription
+      description: newCardDescription,
+      images: imageSrc || []
     }
     // props được truyền từ BoardContent
-    await funcCreateNewCard(newCardData)
+    try {
+      // Chắc chắn rằng bạn đang truyền dữ liệu đúng định dạng
+      console.log('Data sent to API:', newCardData)
+      await funcCreateNewCard(newCardData)
+    } catch (error) {
+      // Xử lý lỗi nếu cần
+      console.error('Error creating new card:', error)
+    }
 
     toggleOpenNewCard()
     setnewCardTitle('')
     setnewCardDescription('')
+    setImageSrc(null)
   }
   const confirm = useConfirm()
   const handleDeleteColumn = () => {
@@ -323,17 +333,18 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
               {/* Upload File  */}
               <Button sx={{ marginRight: 13, color:'white', fontSize: 12, width: '145px' }} size='small' component="label" variant="contained" startIcon={<CloudUploadIcon />}>
         Upload Images
-                <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+              <VisuallyHiddenInput type="file" name="images" onChange={handleFileChange} />
               </Button>
               {imageSrc && (
                 <ImageContainer>
                   {imageSrc && (
                     <>
-                      <CloseButton onClick={handleImageClick}>&times;</CloseButton>
+                      {/* <CloseButton onClick={handleImageClick}>&times;</CloseButton> */}
                       <img
                         src={imageSrc}
                         alt="Uploaded"
                         style={{ maxWidth: '100%', maxHeight: '200px', paddingBottom: 0 }}
+                        onClick={handleImageClick}
                       />
                     </>
                   )}

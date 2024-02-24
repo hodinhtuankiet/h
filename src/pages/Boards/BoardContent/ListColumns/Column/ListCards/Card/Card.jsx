@@ -55,6 +55,9 @@ function Card({ card }) {
         <Typography variant="body2" color="text.secondary">
           {card?.description}
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {card?.images}
+        </Typography>
       </CardContent>
       {/*Example: ![].length -> 0(False) True phủ định  */}
       {/* ![].length -> 0(True) False  */}
