@@ -48,15 +48,12 @@ function Card({ card }) {
       }}>
       {/* nếu như tồn tại card cover thì có ảnh cardMedia  */}
       {card?.cover &&
-      <CardMedia sx={{ height: 140 }}image={card?.cover} /> }
+      <CardMedia sx={{ height: 140 }} image={card?.images} /> }
       <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
         {/* Title Card  */}
         <Typography>{card?.title}</Typography>
         <Typography variant="body2" color="text.secondary">
           {card?.description}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {card?.images}
         </Typography>
       </CardContent>
       {/*Example: ![].length -> 0(False) True phủ định  */}

@@ -34,14 +34,16 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
   const [imageSrc, setImageSrc] = useState(null)
   const handleFileChange = (event) => {
     const file = event.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setImageSrc(reader.result)
-        console.log('Image Src:', reader.result)
-      }
-      reader.readAsDataURL(file)
-    }
+    // if (file) {
+    //   const reader = new FileReader()
+    //   reader.onloadend = () => {
+    //     setImageSrc(reader.result)
+    //     console.log('Image Src:', reader.result)
+    //   }
+    //   reader.readAsDataURL(file)
+    // }
+    console.log(file)
+    setImageSrc(file)
   }
   const [openAddNewCard, setOpenNewCard] = useState(false)
   // When click , it's will switch true -> false or false -> true
@@ -56,17 +58,22 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
       toast.error('Title Card Do Not Empty !')
       return
     }
+    // const formData = new FormData()
+    // formData.append('images', imageSrc)
     // new data card
+    // for (const entry of formData.entries()) {
+    //   const [key, value] = entry
+    //   console.log(`FormData entry: ${key}`, value)
+    // }
     const newCardData = {
       title: newCardTitle,
       columnId: column._id,
       description: newCardDescription,
-      images: imageSrc || []
+      images: imageSrc
     }
     // props được truyền từ BoardContent
     try {
-      // Chắc chắn rằng bạn đang truyền dữ liệu đúng định dạng
-      console.log('Data sent to API:', newCardData)
+      console.log('Data sent to API ở Column.jsx:', newCardData)
       await funcCreateNewCard(newCardData)
     } catch (error) {
       // Xử lý lỗi nếu cần
@@ -259,7 +266,6 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
             </Menu>
           </Box>
         </Box>
-
         {/* CONTENT - lIST CARD */}
         {/* cars: truyền props đến file ListCard.jsx  */}
         <ListCards cards={ orderedCards }/>
@@ -333,7 +339,7 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
               {/* Upload File  */}
               <Button sx={{ marginRight: 13, color:'white', fontSize: 12, width: '145px' }} size='small' component="label" variant="contained" startIcon={<CloudUploadIcon />}>
         Upload Images
-              <VisuallyHiddenInput type="file" name="images" onChange={handleFileChange} />
+                <VisuallyHiddenInput type="file" name="images" onChange={handleFileChange} />
               </Button>
               {imageSrc && (
                 <ImageContainer>

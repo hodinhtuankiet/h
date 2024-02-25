@@ -52,13 +52,14 @@ function _id() {
     setBoard(copyPropertiesBoard)
   }
   const createNewCard = async (dataCardAPI) => {
+    console.log('Images in createNewCard _id :', dataCardAPI.images)
     const createdCard = await createNewCardAPI({
       // spread operator (...) là một cách tiện lợi để tạo ra một bản sao của
       // đối tượng dataCardAPI với thêm một thuộc tính mới boardId.
       ...dataCardAPI,
       // khi tạo mới Column và Card dều có boardId nên phải truyền props như vậy
       boardId: board._id,
-      images: board.images ? [...board.images] : []
+      images: dataCardAPI.images.name
     })
     // create copies without changing the data
     // SET STATE OF COLUMNS

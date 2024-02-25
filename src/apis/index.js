@@ -12,9 +12,11 @@ export const createNewColumnAPI = async (newDataColumn) => {
   return response.data
 }
 // POST CardAPI
-export const createNewCardAPI = async (newDataCard) => {
-  console.log('Images in createNewCardAPI:', newDataCard.images)
-  const response = await axios.post(`${API_ROOT}/v1/cards`, newDataCard)
+export const createNewCardAPI = async (newDataCard, formData) => {
+  console.log('Images in anxios :', newDataCard.images)
+  const response = await axios.post(`${API_ROOT}/v1/cards`, newDataCard, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
   return response.data
 }
 export const deleteColumnAPI = async (columnId) => {
