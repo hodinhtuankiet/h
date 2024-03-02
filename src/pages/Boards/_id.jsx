@@ -6,7 +6,6 @@ import BoardContent from './BoardContent/BoardContent'
 import { useEffect, useState } from 'react'
 import { createNewColumnAPI, fetchBoardDetailsAPI, createNewCardAPI, deleteColumnAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatter'
-import { isEmpty } from 'lodash'
 import { toast } from 'react-toastify'
 function _id() {
   const [board, setBoard] = useState(null)
@@ -51,15 +50,16 @@ function _id() {
 
     setBoard(copyPropertiesBoard)
   }
-  const createNewCard = async (dataCardAPI) => {
-    console.log('Images in createNewCard _id :', dataCardAPI.images)
+  const createNewCard = async (dataCardAPI, formData) => {
+    console.log('Images in createNewCard _id :', formData.get('image').name)
     const createdCard = await createNewCardAPI({
       // spread operator (...) là một cách tiện lợi để tạo ra một bản sao của
       // đối tượng dataCardAPI với thêm một thuộc tính mới boardId.
       ...dataCardAPI,
+      ...formData,
       // khi tạo mới Column và Card dều có boardId nên phải truyền props như vậy
       boardId: board._id,
-      images: dataCardAPI.images.name
+      images: formData.get('image').name
     })
     // create copies without changing the data
     // SET STATE OF COLUMNS

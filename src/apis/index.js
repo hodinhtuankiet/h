@@ -19,6 +19,13 @@ export const createNewCardAPI = async (newDataCard, formData) => {
   })
   return response.data
 }
+// export const createNewCardAPI = async (newDataCard) => {
+//   console.log('Images in anxios :', newDataCard.images)
+//   const response = await axios.post(`${API_ROOT}/v1/cards`, newDataCard
+//     // headers: { 'Content-Type': 'multipart/form-data' }
+//   )
+//   return response.data
+// }
 export const deleteColumnAPI = async (columnId) => {
   const response = await axios.delete(`${API_ROOT}/v1/columns/${columnId}`)
   return response.data

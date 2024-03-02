@@ -9,6 +9,9 @@ import CommentIcon from '@mui/icons-material/Comment'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
+import Popup from '~/components/Dialog/Dialog'
+import CardForm from '~/components/Dialog/CardForm'
 function Card({ card }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     // có id để biết đang kéo thả cái id nào
@@ -24,6 +27,7 @@ function Card({ card }) {
     // đang kéo thì card mờ đi
     opacity: isDragging ? 0.5 : undefined
   }
+  const [openPopup, setOpenPopup] = useState(false)
   // nếu 1 trong 3 cái tồn tại thì True -> sẽ được show lên
   // Còn false thì nó sẽ không bị cái padding để ko dư thừa khoảng trắng
   const shouldShowCardActions = () => {
@@ -31,35 +35,38 @@ function Card({ card }) {
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
   }
   return (
-    <MuiCard
-    // set kéo thả
-      ref={setNodeRef}
-      style={dndKitCardStyles}
-      {...attributes}
-      {...listeners}
-      sx={{
-        cursor: 'pointer',
-        boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-        overflow: 'unset',
-        border: '1px solid transparent',
-        '&:hover': {
-          borderColor: (theme) => theme.palette.primary.main
-        }
-      }}>
-      {/* nếu như tồn tại card cover thì có ảnh cardMedia  */}
-      {card?.cover &&
+    <>
+      <MuiCard
+        // set kéo thả
+        ref={setNodeRef}
+        style={dndKitCardStyles}
+        {...attributes}
+        {...listeners}
+        sx={{
+          cursor: 'pointer',
+          boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+          overflow: 'unset',
+          border: '1px solid transparent',
+          '&:hover': {
+            borderColor: (theme) => theme.palette.primary.main
+          }
+        }}
+        onClick={() => setOpenPopup(true)}
+      >
+        {/* nếu như tồn tại card cover thì có ảnh cardMedia  */}
+        {card?.cover &&
       <CardMedia sx={{ height: 140 }} image={card?.images} /> }
-      <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
-        {/* Title Card  */}
-        <Typography>{card?.title}</Typography>
-        <Typography variant="body2" color="text.secondary">
-          {card?.description}
-        </Typography>
-      </CardContent>
-      {/*Example: ![].length -> 0(False) True phủ định  */}
-      {/* ![].length -> 0(True) False  */}
-      {/* ![1].length -> 1 True  */}
-      { shouldShowCardActions() &&
+        <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
+          {/* Title Card  */}
+          <Typography>{card?.title}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {card?.description}
+          </Typography>
+        </CardContent>
+        {/*Example: ![].length -> 0(False) True phủ định  */}
+        {/* ![].length -> 0(True) False  */}
+        {/* ![1].length -> 1 True  */}
+        { shouldShowCardActions() &&
         <CardActions sx={{ p: '0 4px 8px 4px' } }>
           {/* Nếu !!card?.memberIds?.length là True (Có data ) thì đổ dữ liệu vào */}
           {!!card?.memberIds?.length &&
@@ -76,8 +83,19 @@ function Card({ card }) {
           {/* <Button size="small" startIcon={ <CommentIcon/> }>15</Button>
         <Button size="small" startIcon={ <AttachFileIcon/> }>6</Button> */}
         </CardActions>
-      }
-    </MuiCard>
+        }
+      </MuiCard>
+      <Popup
+        title="Employee Form"
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+      >
+        {/* <EmployeeForm
+          recordForEdit={recordForEdit}
+          addOrEdit={addOrEdit} /> */}
+        <CardForm/>
+      </Popup>
+    </>
   )
 }
 

@@ -58,26 +58,21 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
       toast.error('Title Card Do Not Empty !')
       return
     }
-    // const formData = new FormData()
-    // formData.append('images', imageSrc)
-    // new data card
-    // for (const entry of formData.entries()) {
-    //   const [key, value] = entry
-    //   console.log(`FormData entry: ${key}`, value)
-    // }
+    const formData = new FormData()
+    formData.append('image', imageSrc)
     const newCardData = {
       title: newCardTitle,
       columnId: column._id,
       description: newCardDescription,
-      images: imageSrc
+      images: formData.get('image') ? formData.get('image') : ''
     }
     // props được truyền từ BoardContent
     try {
       console.log('Data sent to API ở Column.jsx:', newCardData)
-      await funcCreateNewCard(newCardData)
+      await funcCreateNewCard(newCardData, formData)
     } catch (error) {
       // Xử lý lỗi nếu cần
-      console.error('Error creating new card:', error)
+      console.error('Error creating new card at Column', error)
     }
 
     toggleOpenNewCard()
@@ -271,6 +266,8 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
         <ListCards cards={ orderedCards }/>
         {/* FOOTER  */}
         <Box
+          component="form"
+          encType="multipart/form-data"
           sx={{
             height: openAddNewCard ? (theme) => theme.trello.columnFooterHeightToggle : (theme) => theme.trello.columnFooterHeight,
             p: 2,
@@ -337,10 +334,7 @@ function Column({ column, funcCreateNewCard, deleteColumnDetails }) {
                   }
                 }}/>
               {/* Upload File  */}
-              <Button sx={{ marginRight: 13, color:'white', fontSize: 12, width: '145px' }} size='small' component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-        Upload Images
-                <VisuallyHiddenInput type="file" name="images" onChange={handleFileChange} />
-              </Button>
+              <input type="file" name='image' accept="images/*" onChange={handleFileChange} />
               {imageSrc && (
                 <ImageContainer>
                   {imageSrc && (
