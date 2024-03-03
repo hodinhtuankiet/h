@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Grid } from '@mui/material'
-import Controls from '~/components/Control/control'
+import  { useState, useEffect } from 'react'
+import { Grid, Input, RadioGroup, Select, Checkbox, Button } from '@mui/material'
+
 import { useForm, Form } from '~/components/Control/useFrom'
 
 
@@ -70,28 +70,28 @@ function CardForm(props) {
     <Form onSubmit={handleSubmit}>
       <Grid container>
         <Grid item xs={6}>
-          <Controls.Input
+          <Input
             name="fullName"
             label="Full Name"
             value={values.fullName}
             onChange={handleInputChange}
             error={errors.fullName}
           />
-          <Controls.Input
+          <Input
             label="Email"
             name="email"
             value={values.email}
             onChange={handleInputChange}
             error={errors.email}
           />
-          <Controls.Input
+          <Input
             label="Mobile"
             name="mobile"
             value={values.mobile}
             onChange={handleInputChange}
             error={errors.mobile}
           />
-          <Controls.Input
+          <Input
             label="City"
             name="city"
             value={values.city}
@@ -100,14 +100,14 @@ function CardForm(props) {
 
         </Grid>
         <Grid item xs={6}>
-          <Controls.RadioGroup
+          <RadioGroup
             name="gender"
             label="Gender"
             value={values.gender}
             onChange={handleInputChange}
             items={genderItems}
           />
-          <Controls.Select
+          <Select
             name="departmentId"
             label="Department"
             value={values.departmentId}
@@ -115,13 +115,8 @@ function CardForm(props) {
             // options={employeeService.getDepartmentCollection()}
             error={errors.departmentId}
           />
-          <Controls.DatePicker
-            name="hireDate"
-            label="Hire Date"
-            value={values.hireDate}
-            onChange={handleInputChange}
-          />
-          <Controls.Checkbox
+          
+          <Checkbox
             name="isPermanent"
             label="Permanent Employee"
             value={values.isPermanent}
@@ -129,10 +124,10 @@ function CardForm(props) {
           />
 
           <div>
-            <Controls.Button
+            <Button
               type="submit"
               text="Submit" />
-            <Controls.Button
+            <Button
               text="Reset"
               color="default"
               onClick={resetForm} />
