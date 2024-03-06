@@ -31,10 +31,7 @@ function Popup(props) {
       <DialogContent>
         {/* <DialogContentText>Do you want remove this user?</DialogContentText> */}
         <Stack spacing={2} margin={2}>
-          <TextField variant="outlined" label="Title Card"></TextField>
-          <TextField variant="outlined" label="Description Card"></TextField>
-          <FormControlLabel control={<Checkbox defaultChecked color="primary"></Checkbox>} label="Agree terms & conditions"></FormControlLabel>
-          <Button color="primary" variant="contained">Submit</Button>
+          <TextField variant="outlined" label="Username"></TextField>
         </Stack>
       </DialogContent>
       <DialogActions>

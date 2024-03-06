@@ -11,6 +11,8 @@ import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import { capitalizeFirstLetter } from '~/utils/capitalize-first-letter'
+import { useState } from 'react'
+import Popup from './Popup'
 // sx={{ bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) }}
 const MENU_STYLES = {
   color: 'primary.main',
@@ -27,6 +29,8 @@ const MENU_STYLES = {
 
 function BoardBar({ board }) {
   // const board = board.board
+  const [openPopup, setOpenPopup] = useState(false)
+
   return (
     <Box px={2} sx={{
       width: '100%',
@@ -73,8 +77,9 @@ function BoardBar({ board }) {
           clickable
         />
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-        <Button variant="outlined" startIcon={<GroupAddIcon/>} >
+      <Box
+       sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <Button onClick={() => setOpenPopup(true)} variant="outlined" startIcon={<GroupAddIcon/>} >
             Invite
         </Button>
 
@@ -125,7 +130,15 @@ function BoardBar({ board }) {
           </Tooltip>
         </AvatarGroup>
       </Box>
-
+      <Popup
+        title="Employee Form"
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+      >
+        {/* <EmployeeForm
+          recordForEdit={recordForEdit}
+          addOrEdit={addOrEdit} /> */}
+      </Popup>
     </Box>
   )
 }

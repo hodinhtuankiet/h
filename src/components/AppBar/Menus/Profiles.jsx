@@ -10,14 +10,20 @@ import bun from '~/assets/bun.jpg'
 import PersonAdd from '@mui/icons-material/PersonAdd'
 import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
+import { useNavigate } from 'react-router-dom'
+
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
+  const navigate = useNavigate()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  const handleProfileClick = () => {
+    navigate('/profile')
   }
   return (
     <Box>
@@ -39,7 +45,7 @@ export default function Profile() {
           'aria-labelledby': 'basic-button-recent'
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleProfileClick}>
           <Avatar sx={{ mr: 2 }} src={bun} />Dinh Tuan Kiet
         </MenuItem>
         <Divider />

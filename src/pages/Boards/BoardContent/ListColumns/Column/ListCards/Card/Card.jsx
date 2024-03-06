@@ -86,14 +86,14 @@ function Card({ card }) {
         }
       </MuiCard>
       <Popup
-        title="Employee Form"
+        title="Update Card"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
         {/* <EmployeeForm
           recordForEdit={recordForEdit}
           addOrEdit={addOrEdit} /> */}
-        <CardForm/>
+        {/* <CardForm/> */}
       </Popup>
     </>
   )
