@@ -9,9 +9,9 @@ import CommentIcon from '@mui/icons-material/Comment'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Popup from '~/components/Dialog/Dialog'
-import CardForm from '~/components/Dialog/CardForm'
+import { readAPI } from '~/apis'
 function Card({ card }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     // có id để biết đang kéo thả cái id nào
@@ -28,8 +28,20 @@ function Card({ card }) {
     opacity: isDragging ? 0.5 : undefined
   }
   const [openPopup, setOpenPopup] = useState(false)
+  const [cardData, setCardData] = useState(null)
   // nếu 1 trong 3 cái tồn tại thì True -> sẽ được show lên
   // Còn false thì nó sẽ không bị cái padding để ko dư thừa khoảng trắng
+  const readCardDetails = async () => {
+    try {
+      const response = await readAPI(card._id)
+      console.log(response)
+      // return response
+      setCardData(response)
+    } catch (error) {
+      console.error('Error fetching card details:', error)
+    }
+  }
+
   const shouldShowCardActions = () => {
     // dùng !! để return về true hoặc false nếu không thì nó sẽ return về 0
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
@@ -51,8 +63,11 @@ function Card({ card }) {
             borderColor: (theme) => theme.palette.primary.main
           }
         }}
-        onClick={() => setOpenPopup(true)}
-      >
+        onClick={() => {
+          readCardDetails()
+          setOpenPopup(true)
+          // setCardData(readCardDetails())
+        }} >
         {/* nếu như tồn tại card cover thì có ảnh cardMedia  */}
         {card?.cover &&
       <CardMedia sx={{ height: 140 }} image={card?.images} /> }
@@ -85,16 +100,14 @@ function Card({ card }) {
         </CardActions>
         }
       </MuiCard>
-      <Popup
-        title="Update Card"
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
-      >
-        {/* <EmployeeForm
-          recordForEdit={recordForEdit}
-          addOrEdit={addOrEdit} /> */}
-        {/* <CardForm/> */}
-      </Popup>
+      {!openPopup ? (null) : (
+        <Popup
+          title="Update Card"
+          openPopup={openPopup}
+          setOpenPopup={setOpenPopup}
+          card={cardData}
+        >
+        </Popup>)}
     </>
   )
 }

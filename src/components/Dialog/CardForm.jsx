@@ -115,7 +115,6 @@ function CardForm(props) {
             // options={employeeService.getDepartmentCollection()}
             error={errors.departmentId}
           />
-          
           <Checkbox
             name="isPermanent"
             label="Permanent Employee"

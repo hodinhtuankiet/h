@@ -30,3 +30,7 @@ export const deleteColumnAPI = async (columnId) => {
   const response = await axios.delete(`${API_ROOT}/v1/columns/${columnId}`)
   return response.data
 }
+export const readAPI = async (cardId) => {
+  const response = await axios.get(`${API_ROOT}/v1/cards/${cardId}`)
+  return response.data
+}

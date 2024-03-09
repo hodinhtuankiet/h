@@ -78,11 +78,10 @@ function BoardBar({ board }) {
         />
       </Box>
       <Box
-       sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <Button onClick={() => setOpenPopup(true)} variant="outlined" startIcon={<GroupAddIcon/>} >
             Invite
         </Button>
-
         <AvatarGroup
           max={7}
           sx={{
