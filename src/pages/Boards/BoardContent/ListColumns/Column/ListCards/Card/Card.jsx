@@ -34,14 +34,16 @@ function Card({ card }) {
   const readCardDetails = async () => {
     try {
       const response = await readAPI(card._id)
-      console.log(response)
       // return response
       setCardData(response)
     } catch (error) {
       console.error('Error fetching card details:', error)
     }
   }
-
+  const updateCardData = (updatedCardData) => {
+    // Update card data in the state
+    setCardData(updatedCardData)
+  }
   const shouldShowCardActions = () => {
     // dùng !! để return về true hoặc false nếu không thì nó sẽ return về 0
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
@@ -106,6 +108,7 @@ function Card({ card }) {
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
           card={cardData}
+          updateCardData={updateCardData}
         >
         </Popup>)}
     </>

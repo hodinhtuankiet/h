@@ -34,3 +34,8 @@ export const readAPI = async (cardId) => {
   const response = await axios.get(`${API_ROOT}/v1/cards/${cardId}`)
   return response.data
 }
+export const updateAPI = async (cardId, updatedData) => {
+  const response = await axios.put(`${API_ROOT}/v1/cards/${cardId}`, updatedData)
+  return response.data
+}
+

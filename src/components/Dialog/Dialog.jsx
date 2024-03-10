@@ -8,9 +8,14 @@ import {
   Checkbox,
   Button,
   Stack,
-  DialogActions
+  DialogActions,
+  Box,
+  Grid,
+  CardContent,
+  Typography
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { updateAPI } from '~/apis'
 
 const useStyles = makeStyles((theme) => ({
   dialogWrapper: {
@@ -43,48 +48,117 @@ function Popup(props) {
     setDescriptionValue(event.target.value)
   }
 
-  const handleSubmit = () => {
-    // Add logic to handle form submission
-    // You can use titleValue and descriptionValue here
+  const updateCard = async () => {
+    try {
+      const response = await updateAPI(card._id, { title: titleValue, description: descriptionValue })
+
+      // Call the callback function to update card data in the Card component
+      props.updateCardData(response)
+
+      // Close the popup
+      setOpenPopup(false)
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        console.error('Card not found:', error)
+
+        // Extract and display a more informative error message to the user
+        const errorMessage = error.response.data || 'Card not found. Please refresh the page or try again later.'
+        alert(errorMessage)
+      } else {
+        console.error('Error updating card details:', error)
+      }
+    }
   }
+
 
   return (
     <Dialog
       style={{ textAlign: 'center' }}
       open={openPopup}
       fullWidth
-      maxWidth="sm"
+      maxWidth="md"
+      // maxHeight="sx"
       classes={{ paper: classes.dialogWrapper }}
     >
       <DialogTitle className={classes.dialogTitle}>{title}</DialogTitle>
       <DialogContent>
         <Stack spacing={2} margin={2}>
-          <TextField
-            variant="outlined"
-            label="Title Card"
-            value={titleValue}
-            onChange={handleTitleChange}
-          />
-          <TextField
-            variant="outlined"
-            label="Description Card"
-            value={descriptionValue}
-            onChange={handleDescriptionChange}
-          />
-          <FormControlLabel
-            control={<Checkbox defaultChecked color="primary" />}
-            label="Agree terms & conditions"
-          />
-          <Button color="primary" variant="contained" onClick={handleSubmit}>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            {/* First Grid item (7 parts) */}
+            <Grid container spacing={2}>
+              {/* First Grid item (8 parts) */}
+              <Grid item xs={9} sx={{ display: 'flex', flexDirection: 'column', width: '720px', justifyContent: 'space-between', '& > *': { marginBottom: '25px' } }}>
+                <TextField
+                  variant="outlined"
+                  label="Title Card"
+                  value={titleValue}
+                  onChange={handleTitleChange}
+                  fullWidth
+                />
+                <TextField
+                  variant="outlined"
+                  label="Description Card"
+                  value={descriptionValue}
+                  onChange={handleDescriptionChange}
+                  fullWidth
+                />
+                <FormControlLabel
+                  control={<Checkbox defaultChecked color="primary" />}
+                  label="Agree terms & conditions"
+                />
+              </Grid>
+
+              {/* Second Grid item (4 parts) */}
+              <Grid item xs={3}
+                sx={{ display: 'flex',
+                  flexDirection: 'column',
+                  width: '620px',
+                  justifyContent: 'space-between',
+                  '& > *': { marginBottom: '20px' } }}>
+                <CardContent sx={{
+                  p: 1.5,
+                  '&:last-child': { p: 1.5 },
+                  height: 50,
+                  border: '1px solid transparent', // Set a default border
+                  borderRadius: '7px',
+                  '&:hover': {
+                    borderColor: '#bdc3c7',
+                    cursor: 'pointer'
+                    // Change border color on hover
+                  },
+                  color: 'white',
+                  borderColor: '#353b48', // Set border color
+                  borderStyle: 'solid', // Set border style
+                  bgcolor: '#353b48',
+                  textAlign: 'left'
+                }}>
+                  {/* Title Card  */}
+                  <Typography>Join</Typography>
+                  {/* <Typography variant="body2" color="text.secondary">
+                    {card?.description}
+                  </Typography> */}
+                </CardContent>
+
+              </Grid>
+            </Grid>
+
+          </Box>
+
+
+          {/* <Button color="primary" variant="contained" onClick={handleSubmit}>
             Submit
-          </Button>
+          </Button> */}
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button color="success" variant="contained" onClick={handleSubmit}>
+        <Button onClick={() => updateCard()} sx={{ color: 'white' }} color="primary" variant="contained">
           Yes
         </Button>
-        <Button onClick={() => setOpenPopup(false)} color="error" variant="contained">
+        <Button onClick={() => setOpenPopup(false)} sx={{ color: 'white' }} color="error" variant="contained">
           Close
         </Button>
       </DialogActions>

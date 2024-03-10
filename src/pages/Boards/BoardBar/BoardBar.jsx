@@ -130,7 +130,7 @@ function BoardBar({ board }) {
         </AvatarGroup>
       </Box>
       <Popup
-        title="Employee Form"
+        title="Invite Person"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

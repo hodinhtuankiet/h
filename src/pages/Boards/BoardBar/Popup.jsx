@@ -35,8 +35,12 @@ function Popup(props) {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button color="success" variant="contained">Yes</Button>
-        <Button onClick={() => setOpenPopup(false)} color="error" variant="contained">Close</Button>
+        <Button sx={{ color: 'white' }} color="primary" variant="contained">
+          Yes
+        </Button>
+        <Button onClick={() => setOpenPopup(false)} sx={{ color: 'white' }} color="error" variant="contained">
+          Close
+        </Button>
       </DialogActions>
     </Dialog>
   )

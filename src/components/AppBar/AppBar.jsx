@@ -16,7 +16,26 @@ import Badge from '@mui/material/Badge'
 import Tooltip from '@mui/material/Tooltip'
 import HelpOutLineIcon from '@mui/icons-material/HelpOutLine'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Divider from '@mui/material/Divider'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import React from 'react'
+import { Popover } from '@mui/material'
 function AppBar() {
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleNotificationClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null)
+  }
+
+  const open = Boolean(anchorEl)
   return (
     <Box px={2} sx={{
       width: '100%',
@@ -55,11 +74,91 @@ function AppBar() {
         <ModeSelect/>
         {/* Tooltip hover vào hiện chữ  */}
         <Tooltip title="Notification">
-          {/* Hiện lên hình tròn cho notifi  */}
-          <Badge color="primary" variant="dot" sx={{ cursor: 'pointer' }}>
+          <Badge color="primary" variant="dot" sx={{ cursor: 'pointer' }} onClick={handleNotificationClick}>
             <NotificationsNoneIcon />
           </Badge>
         </Tooltip>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+        >
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src="https://watermark.lovepik.com/photo/20211203/large/lovepik-smiling-man-picture_501490289.jpg" />
+              </ListItemAvatar>
+              <ListItemText
+                primary="Brunch this weekend?"
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                Ali Connors
+                    </Typography>
+                    {' — I\'ll be in your neighborhood doing errands this…'}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Travis Howard" src="https://cafebiz.cafebizcdn.vn/162123310254002176/2020/9/15/1-1600135860402749216525.png" />
+              </ListItemAvatar>
+              <ListItemText
+                primary="Summer BBQ"
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                to Scott, Alex, Jennifer
+                    </Typography>
+                    {' — Wish I could come, but I\'m out of town this…'}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Cindy Baker" src="https://lh4.googleusercontent.com/WSGZnJHFeJPasjNCsH0GlDlfgN85em5PmDR_MRw5lQxz58esADMU7l3qP6Rq-83VIB8-vuv3eaMKCgDsbqTZMBnL1g3DrHlmxXAM4mnq8oXApXe5xDjQVgbt7hzllN1_RqPadVOSgkkDEPq5XQ" />
+              </ListItemAvatar>
+              <ListItemText
+                primary="Oui Oui"
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                Sandra Adams
+                    </Typography>
+                    {' — Do you have Paris recommendations? Have you ever…'}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          </List>
+        </Popover>
         {/* bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ) } */}
         <Tooltip title="Question">
           <HelpOutLineIcon color="(theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' )" variant="dot" sx={{ cursor: 'pointer' }}>

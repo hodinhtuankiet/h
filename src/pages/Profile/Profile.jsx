@@ -2,6 +2,7 @@ import React from 'react'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit'
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import bun from '~/assets/bun.jpg'
+import background from '~/assets/background.jpg'
 import { useNavigate } from 'react-router-dom'
 
 export default function EditButton() {
@@ -10,7 +11,7 @@ export default function EditButton() {
     navigate('/detail-profile')
   }
   return (
-    <div className="gradient-custom-2" style={{ backgroundColor: '#9de2ff' }}>
+    <div className="gradient-custom-2" style={{ backgroundImage: `url(${background})`,backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">
@@ -24,8 +25,8 @@ export default function EditButton() {
                   </MDBBtn>
                 </div>
                 <div className="ms-3" style={{ marginTop: '130px' }}>
-                  <MDBTypography tag="h5">Andy Horwitz</MDBTypography>
-                  <MDBCardText>New York</MDBCardText>
+                  <MDBTypography tag="h5">Dinh Tuan Kiet</MDBTypography>
+                  <MDBCardText>Da Nang</MDBCardText>
                 </div>
               </div>
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
