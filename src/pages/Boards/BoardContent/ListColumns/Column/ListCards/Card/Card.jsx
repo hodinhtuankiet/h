@@ -28,18 +28,21 @@ function Card({ card }) {
     opacity: isDragging ? 0.5 : undefined
   }
   const [openPopup, setOpenPopup] = useState(false)
-  const [cardData, setCardData] = useState(null)
+  const [cardData, setCardData] = useState(card)
   // nếu 1 trong 3 cái tồn tại thì True -> sẽ được show lên
   // Còn false thì nó sẽ không bị cái padding để ko dư thừa khoảng trắng
-  const readCardDetails = async () => {
+  const readCardDetails = async (cardId) => {
     try {
-      const response = await readAPI(card._id)
+      const response = await readAPI(cardId)
       // return response
-      setCardData(response)
+      setCardData((prevData) => ({ ...prevData, ...response }))
     } catch (error) {
       console.error('Error fetching card details:', error)
     }
   }
+  useEffect(() => {
+    readCardDetails(card?._id)
+  }, [card.title])
   const updateCardData = (updatedCardData) => {
     // Update card data in the state
     setCardData(updatedCardData)
@@ -66,7 +69,7 @@ function Card({ card }) {
           }
         }}
         onClick={() => {
-          readCardDetails()
+          readCardDetails(card._id)
           setOpenPopup(true)
           // setCardData(readCardDetails())
         }} >
@@ -102,15 +105,16 @@ function Card({ card }) {
         </CardActions>
         }
       </MuiCard>
-      {!openPopup ? (null) : (
+      {!openPopup ? null : (
         <Popup
           title="Update Card"
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
           card={cardData}
           updateCardData={updateCardData}
-        >
-        </Popup>)}
+          readCardDetails={readCardDetails}
+        />
+      )}
     </>
   )
 }

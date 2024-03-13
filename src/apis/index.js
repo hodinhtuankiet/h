@@ -6,6 +6,11 @@ export const fetchBoardDetailsAPI = async (boardId) => {
   // axios always response.data
   return response.data
 }
+export const fetchCardImagesAPI = async (imagesId) => {
+  const response = await axios.get(`${API_ROOT}/v1/profile/${imagesId}`)
+  // axios always response.data
+  return response.data
+}
 // POST ColumnAPI
 export const createNewColumnAPI = async (newDataColumn) => {
   const response = await axios.post(`${API_ROOT}/v1/columns`, newDataColumn)
@@ -35,7 +40,14 @@ export const readAPI = async (cardId) => {
   return response.data
 }
 export const updateAPI = async (cardId, updatedData) => {
-  const response = await axios.put(`${API_ROOT}/v1/cards/${cardId}`, updatedData)
+  const response = await axios.put(`${API_ROOT}/v1/cards/edit/${cardId}`, updatedData)
+  return response.data
+}
+export const uploadImageCardAPI = async (formData) => {
+  // console.log('Images in anxios :', formData.images)
+  const response = await axios.post(`${API_ROOT}/v1/profile/upload`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
   return response.data
 }
 

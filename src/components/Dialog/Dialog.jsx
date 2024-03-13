@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -50,27 +50,23 @@ function Popup(props) {
 
   const updateCard = async () => {
     try {
+      console.log('id cua card', card._id)
       const response = await updateAPI(card._id, { title: titleValue, description: descriptionValue })
-
+      // setTitleValue(response.title)
+      // setDescriptionValue(response.description)
       // Call the callback function to update card data in the Card component
-      props.updateCardData(response)
-
+      // props.updateCardData(response)
+      await props.readCardDetails(response._id)
       // Close the popup
       setOpenPopup(false)
     } catch (error) {
       if (error.response && error.response.status === 404) {
         console.error('Card not found:', error)
-
-        // Extract and display a more informative error message to the user
-        const errorMessage = error.response.data || 'Card not found. Please refresh the page or try again later.'
-        alert(errorMessage)
       } else {
         console.error('Error updating card details:', error)
       }
     }
   }
-
-
   return (
     <Dialog
       style={{ textAlign: 'center' }}
